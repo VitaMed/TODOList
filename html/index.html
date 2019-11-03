@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+	<!-- Кодировка веб-страницы -->
+	<meta charset="utf-8">
+	<!-- Настройка viewport -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Подключаем Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" href="../css/style.css">
+
+
+	<title>TODOList</title>
+</head>
+
+<body>
+    <div id="wrap">
+
+        <div id="editModal" class="modal fade" role="dialog" >
+                <div class="modal-dialog modal-lg" role="contentinfo">
+                    <div class="modal-content mx-auto col-5">
+                        <form class="js-form" id="edit-form">
+                       <label for="edit-id" class="col-12 mt-3 col-md-2 col-form-label">Title:</label>
+                          <input type="text" style="visibility: hidden;" id="edit-id" name="id"></input>
+                          <div class="col-12">
+                             <input type="text" class="form-control mt-1" id="edit-title" name="title" placeholder="Title">
+                          </div>
+                          <label for="edit-description" class="col-12 col-md-2 mt-3 col-form-label">Description:</label>
+                          <div class="col-12">
+                             <input type="text-area" class="form-control mt-1" id="edit-description" name="description" style="height: 80px" placeholder="Description">
+                          </div>
+                          <label for="edit-priority" class="col-12 col-md-2 mt-3 col-form-label">Priority:</label>
+                          <div class="col-12 mt-1">
+                             <select class="form-control" id="edit-priority" name="priority">
+                                <option selected="selected">High</option>
+                                <option>Normal</option>
+                                <option>Low</option>
+                             </select>
+                          </div>
+                          <div class="col-12 my-4">
+                             <input type="button" id="edit-cancel" value="Cancel" class="btn col-6 border rounded-pill" style="width: 130px"></input>
+                             <input type="submit" value="Save" class="btn col-6 border rounded-pill" style=" width: 130px"></input>
+                          </div>
+                       </form>
+                    </div>
+                </div>
+            </div>
+
+        <div id="createModal" class="modal fade" role="dialog" >
+              <div class="modal-dialog modal-lg" role="contentinfo">
+                 <div class="modal-content mx-auto col-5">
+                    <form class="js-form" id="create-form">
+                       <label for="create-title" class="col-12 mt-3 col-md-2 col-form-label">Title:</label>
+                       <div class="col-12">
+                          <input type="text" class="form-control mt-1" id="create-title" name="title" placeholder="Title">
+                       </div>
+                       <label for="create-description" class="col-12 col-md-2 mt-3 col-form-label">Description:</label>
+                       <div class="col-12">
+                          <input type="text-area" class="form-control mt-1" id="create-description" name="description" style="height: 80px" placeholder="Description">
+                       </div>
+                       <label for="create-priority" class="col-12 col-md-2 mt-3 col-form-label">Priority:</label>
+                       <div class="col-12 mt-1">
+                          <select class="form-control" name="priority" id="create-priority">
+                             <option selected="selected">High</option>
+                             <option>Normal</option>
+                             <option>Low</option>
+                          </select>
+                       </div>
+                       <div class="col-12 my-4">
+                          <input type="button" id="create-cancel" value="Cancel" class="btn col-6 border rounded-pill" style="width: 130px"></input>
+                          <input type="submit" value="Save" class="btn col-6 border rounded-pill" style=" width: 130px"></input>
+                       </div>
+                    </form>
+                 </div>
+              </div>
+           </div>
+
+        <nav class="navbar border-bottom">
+              <div class="container">
+                 <h4 class="navbar-text">TODOList</h4>
+              </div>
+           </nav>
+
+        <div class="container">
+              <div class="row mt-5">
+                 <div class="col-4 has-search">
+                    <a id="search" ><i class="fa fa-search form-control-feedback grow"></i></a>
+                    <input type="text" class="form-control" placeholder="search by title" id="inputTitle">
+                 </div>
+                 <div class="col-3">
+                    <select class="form-control" id="statusCard">
+                       <option value="0">all</option>
+                       <option value="1">open</option>
+                       <option value="2">done</option>
+                    </select>
+                 </div>
+                 <div class="col-3">
+                    <select class="form-control" id="priorityCard">
+                       <option value="all">all</option>
+                       <option value="high">high</option>
+                       <option value="normal">normal</option>
+                       <option value="low">low</option>
+                    </select>
+                 </div>
+                 <div class="col-2" >
+                    <a id="openCreate" role="button" class="btn btn-block border rounded-pill nav-link" style="width: 130px">Create</a>
+                 </div>
+              </div>
+           </div>
+
+        <div class="container mt-3">
+              <div class="row" id="list">
+              </div>
+           </div>
+
+        <template id="card">
+              <div class="col-3 b-2 card-div">
+                 <span style="visibility: hidden;" class="card-id"></span>
+                 <div class="card">
+                    <h3 class="card-header"><span name="card-header-text"></span><i class="fas done fa-check-square"></i></h3>
+                    <div class="card-body">
+                       <span name="card-body-text"></span>
+                       <div class="col-12 row ">
+                          <span class="priority align-self-start p-2 rounded-pill"></span>
+                          <div class="dropdown ml-auto align-self-end">
+                             <i class="fas dropdown-toggle fa-ellipsis-h rounded-pill p-1 border" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ></i>
+                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item done-button" href="#">Done</a>
+                                <a class="dropdown-item edit-button" href="#">Edit</a>
+                                <a class="dropdown-item delete-button" href="#">Delete</a>
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+              </div>
+           </template>
+    </div>
+   <footer class="footer border-top">
+      <div class="container">
+         <div class="row ">
+            <h5>Ivanov Ivan</h5>
+         </div>
+      </div>
+   </footer>
+   <!-- Подключаем jQuery -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+   <!-- Подключаем плагин Popper -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+
+   <!-- Подключаем Bootstrap JS -->
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous" ></script>
+   <script src="https://kit.fontawesome.com/e825e541ab.js" crossorigin="anonymous"></script>
+   <script src="https://use.fontawesome.com/019f8401f7.js"></script>
+
+   <script type="text/javascript" src="../js/script.js"></script>
+
+</body>
+
+</html>

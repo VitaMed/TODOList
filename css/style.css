@@ -1,0 +1,47 @@
+html,
+body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+#wrap {
+    flex: 1 0 auto;
+    padding: 1rem;
+}
+
+footer {
+    flex: 0 0 auto;
+    padding: 1rem;
+}
+.has-search .form-control {
+    padding-left: 2.375rem;
+}
+.hidden{
+    display: none;
+}
+.done{
+    border:none;
+    color: forestgreen;
+}
+.priority ,.dropdownMenuButton {
+    border:dashed;
+}
+
+.has-search .form-control-feedback {
+    position: absolute;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    color: #aaa;
+}
+.grow:hover {
+    -webkit-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2);
+}
